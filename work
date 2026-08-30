@@ -1,1 +1,10 @@
+print("Employee Status values:")
+print(employee_master["Employee Status"].value_counts())
 
+print("\nActual Join Date range:")
+print("From:", employee_master["Actual Join Date"].min())
+print("To  :", employee_master["Actual Join Date"].max())
+
+print("\nResignation Date range:")
+print("From:", employee_master["Resignation Date"].min())
+print("To  :", employee_master["Resignation Date"].max())
