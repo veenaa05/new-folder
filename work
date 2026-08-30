@@ -1,1 +1,40 @@
+# ============================================================
+# FACTOR COVERAGE & SOURCE CHECK
+# ============================================================
 
+print("=" * 75)
+print("MONTHLY PREDICTIVE FACTOR COVERAGE")
+print("=" * 75)
+
+factor_columns = [
+    "New_Hires",
+    "Headcount",
+    "Resigned_Employees",
+    "Turnover_Rate",
+    "Average_Tenure_Years",
+    "Absenteeism_Rate",
+    "Unplanned_Leave_Days",
+    "Avg_OT_Hours_Per_Emp"
+]
+
+for col in factor_columns:
+    if col in model_df.columns:
+        non_missing = model_df[col].notna().sum()
+        missing = model_df[col].isna().sum()
+
+        print(
+            f"{col:30} "
+            f"Available = {non_missing:3d} | "
+            f"Missing = {missing:3d}"
+        )
+
+print("\n" + "=" * 75)
+print("AVAILABLE SOURCE DATAFRAMES")
+print("=" * 75)
+
+print("monthly_hiring       :", monthly_hiring.shape)
+print("monthly_headcount    :", monthly_headcount.shape)
+print("resignation_data     :", resignation_data.shape)
+print("monthly_tenure       :", monthly_tenure.shape)
+print("attendance_metrics   :", attendance_metrics.shape)
+print("ot_features          :", ot_features.shape)
