@@ -1,1 +1,50 @@
+Dear Sir,
+
+I am currently working on the Future Hiring Prediction model and have prepared the monthly modelling dataset using the identified predictive factors.
+
+I have already received the employee attendance data for Jan 2026 to Aug 2026, which is being used to derive the attendance-related factors.
+
+However, for the other factors, the current historical data coverage is limited. Please find the current data availability below:
+
+Predictive Factor
+
+Historical Data Available
+
+Headcount
+
+266 months ✅
+
+New Hires
+
+266 months ✅
+
+Average Tenure
+
+266 months ✅
+
+Resignations
+
+8 months ❌
+
+Turnover Rate
+
+8 months ❌
+
+Absenteeism Rate
+
+2 months ❌
+
+Unplanned Leave Days
+
+2 months ❌
+
+Average OT Hours per Employee
+
+2 months ❌
+
+Could you please help provide the historical data for the factors with limited availability, preferably on a monthly basis? If monthly consolidated data is not available, the available raw data can also be shared.
+
+Ideally, data for Jan 2025 onwards, or the maximum available historical period, would be helpful.
+
+This will help me build and validate the prediction using all the identified predictive factors and make the forecast more reliable.
 
