@@ -1,1 +1,27 @@
+# Create employee-level June overtime feature
 
+june_ot_feature = june_ot[
+    ["EMP CODE", "CHARGEABLE TOTAL", "NON CHARGEABLE TOTAL", "TOTAL"]
+].copy()
+
+june_ot_feature = june_ot_feature.rename(columns={
+    "EMP CODE": "Employee Code",
+    "CHARGEABLE TOTAL": "Chargeable OT June",
+    "NON CHARGEABLE TOTAL": "Non Chargeable OT June",
+    "TOTAL": "Total OT June"
+})
+
+# One row per employee
+june_ot_feature = (
+    june_ot_feature
+    .groupby("Employee Code", as_index=False)[
+        ["Chargeable OT June",
+         "Non Chargeable OT June",
+         "Total OT June"]
+    ]
+    .sum()
+)
+
+print("June OT feature shape:", june_ot_feature.shape)
+
+display(june_ot_feature.head(10))
