@@ -1,1 +1,38 @@
+# ============================================================
+# CREATE DATA AVAILABILITY INDICATORS
+# ============================================================
 
+june_codes = set(june_att_feature["Employee Code"])
+ot_codes = set(ot_features["Employee Code"])
+
+july_att_feature["June_Attendance_Available"] = (
+    july_att_feature["Employee Code"].isin(june_codes).astype(int)
+)
+
+july_att_feature["OT_July_Available"] = (
+    july_att_feature["Employee Code"].isin(ot_codes).astype(int)
+)
+
+print(
+    "July employees with June attendance:",
+    july_att_feature["June_Attendance_Available"].sum()
+)
+
+print(
+    "July employees without June attendance:",
+    (
+        july_att_feature["June_Attendance_Available"].eq(0)
+    ).sum()
+)
+
+print(
+    "July employees with OT record:",
+    july_att_feature["OT_July_Available"].sum()
+)
+
+print(
+    "July employees without OT record:",
+    (
+        july_att_feature["OT_July_Available"].eq(0)
+    ).sum()
+)
