@@ -1,1 +1,16 @@
+# Load June overtime data
 
+june_ot_path = next(
+    input_file_path.glob("*Overtime Upload Report_20260807084943902.csv")
+)
+
+june_ot = pd.read_csv(june_ot_path)
+
+print("June OT shape:", june_ot.shape)
+print("\nJune OT columns:")
+print(june_ot.columns.tolist())
+
+print("\nJune TOTAL OT summary:")
+print(june_ot["TOTAL"].describe())
+
+print("\nMissing TOTAL values:", june_ot["TOTAL"].isna().sum())
