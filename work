@@ -1,42 +1,34 @@
-# ============================================================
-# FINAL DATASET VALIDATION
-# ============================================================
+============================================================
+FINAL FEATURE DATASET VALIDATION
+============================================================
+Rows: 20069
+Columns: 26
 
-print("=" * 60)
-print("FINAL FEATURE DATASET VALIDATION")
-print("=" * 60)
+Unique employees: 20069
+Duplicate employee codes: 0
 
-print("Rows:", len(final_features))
-print("Columns:", len(final_features.columns))
+June attendance available: 18438
+June attendance unavailable: 1631
 
-print("\nUnique employees:",
-      final_features["Employee Code"].nunique())
+July OT available: 7970
+July OT unavailable: 12099
 
-print("Duplicate employee codes:",
-      final_features["Employee Code"].duplicated().sum())
+OT totals:
+June OT: 54428.7
+July OT: 54714.899999999994
+OT Change: 286.2000000000003
 
-print("\nJune attendance available:",
-      final_features["June_Attendance_Available"].sum())
+Missing values:
+Present Count June      1631
+Absent Count June       1631
+Half Day Count June     1631
+Approved Leaves June    1631
+Payable June            1631
+Non Payable June        1631
+Total Days June         1631
+Absence Rate June       1631
+dtype: int64
 
-print("June attendance unavailable:",
-      (final_features["June_Attendance_Available"] == 0).sum())
-
-print("\nJuly OT available:",
-      final_features["OT_July_Available"].sum())
-
-print("July OT unavailable:",
-      (final_features["OT_July_Available"] == 0).sum())
-
-print("\nOT totals:")
-print("June OT:", final_features["Total OT June"].sum())
-print("July OT:", final_features["Total OT"].sum())
-print("OT Change:", final_features["OT Change"].sum())
-
-print("\nMissing values:")
-missing = final_features.isna().sum()
-print(missing[missing > 0])
-
-print("\nFinal feature columns:")
-print(final_features.columns.tolist())
-
-print("=" * 60)
+Final feature columns:
+['Employee Code', 'Present Count', 'Absent Count', 'Half Day Count', 'Approved Leaves', 'Payable', 'Non Payable', 'Total Days', 'Absence Rate July', 'Present Count June', 'Absent Count June', 'Half Day Count June', 'Approved Leaves June', 'Payable June', 'Non Payable June', 'Total Days June', 'Absence Rate June', 'June_Attendance_Available', 'Chargeable OT June', 'Non Chargeable OT June', 'Total OT June', 'Chargeable OT', 'Non Chargeable OT', 'Total OT', 'OT_July_Available', 'OT Change']
+============================================================
