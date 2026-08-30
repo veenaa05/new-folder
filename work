@@ -1,1 +1,171 @@
+# ============================================================
+# MERGE JUNE + JULY OT FEATURES
+# ============================================================
+
+ot_cols = [
+    "Employee Code",
+    "Chargeable OT June",
+    "Non Chargeable OT June",
+    "Total OT June",
+    "Chargeable OT",
+    "Non Chargeable OT",
+    "Total OT"
+]
+
+ot_merge = ot_features[ot_cols].copy()
+
+final_features = final_features.merge(
+    ot_merge,
+    on="Employee Code",
+    how="left",
+    validate="one_to_one"
+)
+
+print("After OT merge:", final_features.shape)
+
+/////////
+# ============================================================
+# CALCULATE OT CHANGE
+# ============================================================
+
+# Employees with no June OT are treated as 0 June OT
+final_features["Total OT June"] = (
+    final_features["Total OT June"].fillna(0)
+)
+
+# Employees with no July OT record are treated as 0 July OT
+final_features["Total OT"] = (
+    final_features["Total OT"].fillna(0)
+)
+
+final_features["OT Change"] = (
+    final_features["Total OT"] -
+    final_features["Total OT June"]
+)
+
+///////
+ot_zero_cols = [
+    "Chargeable OT June",
+    "Non Chargeable OT June",
+    "Chargeable OT",
+    "Non Chargeable OT"
+]
+
+for col in ot_zero_cols:
+    final_features[col] = final_features[col].fillna(0)
+
+//////
+# ============================================================
+# HANDLE MISSING JUNE ATTENDANCE
+# ============================================================
+
+june_att_cols = [
+    "Present Count June",
+    "Absent Count June",
+    "Half Day Count June",
+    "Approved Leaves June",
+    "Payable June",
+    "Non Payable June",
+    "Total Days June",
+    "Absence Rate June"
+]
+
+# Keep missing June values as NaN for employees
+# who genuinely had no June attendance record.
+
+print(
+    "Employees without June attendance:",
+    final_features["Present Count June"].isna().sum()
+)
+
+
+////////
+# ============================================================
+# FINAL FEATURE DATASET
+# ============================================================
+
+final_feature_cols = [
+    "Employee Code",
+
+    # July Attendance
+    "Present Count",
+    "Absent Count",
+    "Half Day Count",
+    "Approved Leaves",
+    "Payable",
+    "Non Payable",
+    "Total Days",
+    "Absence Rate July",
+
+    # June Attendance
+    "Present Count June",
+    "Absent Count June",
+    "Half Day Count June",
+    "Approved Leaves June",
+    "Payable June",
+    "Non Payable June",
+    "Total Days June",
+    "Absence Rate June",
+    "June_Attendance_Available",
+
+    # June OT
+    "Chargeable OT June",
+    "Non Chargeable OT June",
+    "Total OT June",
+
+    # July OT
+    "Chargeable OT",
+    "Non Chargeable OT",
+    "Total OT",
+    "OT_July_Available",
+
+    # OT movement
+    "OT Change"
+]
+
+final_features = final_features[final_feature_cols].copy()
+
+print("Final feature shape:", final_features.shape)
+print("\nFinal feature columns:")
+print(final_features.columns.tolist())
+
+display(final_features.head(10))
+
+//////
+# ============================================================
+# FINAL VALIDATION
+# ============================================================
+
+print("=" * 70)
+print("FINAL FEATURE VALIDATION")
+print("=" * 70)
+
+print("Rows:", len(final_features))
+print("Columns:", len(final_features.columns))
+
+print("\nUnique employees:",
+      final_features["Employee Code"].nunique())
+
+print("Duplicate employee codes:",
+      final_features["Employee Code"].duplicated().sum())
+
+print("\nJune attendance available:",
+      final_features["June_Attendance_Available"].sum())
+
+print("June attendance unavailable:",
+      (final_features["June_Attendance_Available"] == 0).sum())
+
+print("\nJuly OT available:",
+      final_features["OT_July_Available"].sum())
+
+print("July OT unavailable:",
+      (final_features["OT_July_Available"] == 0).sum())
+
+print("\nOT totals:")
+print("June OT:", final_features["Total OT June"].sum())
+print("July OT:", final_features["Total OT"].sum())
+print("OT Change:", final_features["OT Change"].sum())
+
+print("\nMissing values:")
+display(final_features.isna().sum().to_frame("Missing Count"))
 
