@@ -1,1 +1,95 @@
+# ============================================================
+# Combine June + July Attendance + June/July OT features
+# July attendance is the base/current workforce population
+# ============================================================
 
+# Make copies
+final_features = july_att_feature.copy()
+
+# ------------------------------------------------------------
+# Rename June attendance columns
+# ------------------------------------------------------------
+
+june_att_merge = june_att_feature.rename(columns={
+    "Present Count": "Present Count June",
+    "Absent Count": "Absent Count June",
+    "Half Day Count": "Half Day Count June",
+    "Approved Leaves": "Approved Leaves June",
+    "Payable": "Payable June",
+    "Non Payable": "Non Payable June",
+    "Total Days": "Total Days June"
+})
+
+# ------------------------------------------------------------
+# Merge June attendance onto July employees
+# ------------------------------------------------------------
+
+final_features = final_features.merge(
+    june_att_merge,
+    on="Employee Code",
+    how="left",
+    validate="one_to_one"
+)
+
+# ------------------------------------------------------------
+# Merge OT features
+# ------------------------------------------------------------
+
+final_features = final_features.merge(
+    ot_features,
+    on="Employee Code",
+    how="left",
+    validate="one_to_one"
+)
+
+# ------------------------------------------------------------
+# Fill missing OT values with 0
+# ------------------------------------------------------------
+
+ot_columns = [
+    "Chargeable OT June",
+    "Non Chargeable OT June",
+    "Total OT June",
+    "Chargeable OT",
+    "Non Chargeable OT",
+    "Total OT",
+    "OT Change"
+]
+
+for col in ot_columns:
+    if col in final_features.columns:
+        final_features[col] = (
+            pd.to_numeric(final_features[col], errors="coerce")
+            .fillna(0)
+        )
+
+# ------------------------------------------------------------
+# Check June attendance missingness
+# ------------------------------------------------------------
+
+june_columns = [
+    "Present Count June",
+    "Absent Count June",
+    "Half Day Count June",
+    "Approved Leaves June",
+    "Payable June",
+    "Non Payable June",
+    "Total Days June"
+]
+
+print("Final feature shape:", final_features.shape)
+
+print(
+    "July employees without June attendance:",
+    final_features["Present Count June"].isna().sum()
+)
+
+print(
+    "July employees without OT record:",
+    final_features["Total OT"].eq(0).sum()
+)
+
+print("\nFinal feature columns:")
+print(final_features.columns.tolist())
+
+display(final_features.head(10))
