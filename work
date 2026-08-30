@@ -1,16 +1,1 @@
-# Create monthly resignation history
-resignation_data = (
-    employee_master.dropna(subset=["Resignation Date"])
-    .set_index("Resignation Date")
-    .resample("MS")
-    .size()
-    .reset_index(name="Resigned Employees")
-)
 
-resignation_data.rename(columns={"Resignation Date": "Month"}, inplace=True)
-
-print("Monthly resignation history:")
-print("From:", resignation_data["Month"].min())
-print("To  :", resignation_data["Month"].max())
-
-display(resignation_data.tail(12))
