@@ -1,1 +1,153 @@
+# ============================================================
+# BUILD MONTHLY MODELING DATASET
+# ALL AVAILABLE WORKFORCE FACTORS
+# ============================================================
 
+import pandas as pd
+import numpy as np
+
+# ------------------------------------------------------------
+# 1. Start with historical monthly workforce data
+# ------------------------------------------------------------
+
+model_df = workforce_data.copy()
+
+model_df["Month"] = pd.to_datetime(model_df["Month"])
+
+
+# ------------------------------------------------------------
+# 2. Add average tenure
+# ------------------------------------------------------------
+
+tenure_df = monthly_tenure.copy()
+
+tenure_df["Month"] = pd.to_datetime(tenure_df["Month"])
+
+model_df = model_df.merge(
+    tenure_df,
+    on="Month",
+    how="left"
+)
+
+
+# ------------------------------------------------------------
+# 3. Add attendance factors
+# ------------------------------------------------------------
+
+attendance_df = attendance_metrics.copy()
+
+attendance_df["Month"] = pd.to_datetime(attendance_df["Month"])
+
+model_df = model_df.merge(
+    attendance_df,
+    on="Month",
+    how="left"
+)
+
+
+# ------------------------------------------------------------
+# 4. Calculate monthly OT factors
+# ------------------------------------------------------------
+
+# June
+june_ot_total = june_ot_feature["Total OT June"].sum()
+june_ot_employees = (
+    june_ot_feature["Total OT June"] > 0
+).sum()
+
+june_avg_ot = (
+    june_ot_total / june_ot_employees
+    if june_ot_employees > 0 else 0
+)
+
+
+# July
+july_ot_total = july_ot_feature["Total OT"].sum()
+july_ot_employees = (
+    july_ot_feature["Total OT"] > 0
+).sum()
+
+july_avg_ot = (
+    july_ot_total / july_ot_employees
+    if july_ot_employees > 0 else 0
+)
+
+
+ot_monthly = pd.DataFrame({
+    "Month": pd.to_datetime([
+        "2026-06-01",
+        "2026-07-01"
+    ]),
+    "Avg OT Hours Per Employee": [
+        june_avg_ot,
+        july_avg_ot
+    ]
+})
+
+
+model_df = model_df.merge(
+    ot_monthly,
+    on="Month",
+    how="left"
+)
+
+
+# ------------------------------------------------------------
+# 5. Rename columns for final modelling dataset
+# ------------------------------------------------------------
+
+model_df = model_df.rename(columns={
+    "New Joiners": "New_Hires",
+    "Headcount": "Headcount",
+    "Resigned Employees": "Resigned_Employees",
+    "Turnover Rate (%)": "Turnover_Rate",
+    "Average Tenure Years": "Average_Tenure_Years",
+    "Absenteeism Rate (%)": "Absenteeism_Rate",
+    "Unplanned Leave Days": "Unplanned_Leave_Days",
+    "Avg OT Hours Per Employee": "Avg_OT_Hours_Per_Emp"
+})
+
+
+# ------------------------------------------------------------
+# 6. Select modelling columns
+# ------------------------------------------------------------
+
+model_columns = [
+    "Month",
+    "New_Hires",
+    "Headcount",
+    "Resigned_Employees",
+    "Turnover_Rate",
+    "Average_Tenure_Years",
+    "Absenteeism_Rate",
+    "Unplanned_Leave_Days",
+    "Avg_OT_Hours_Per_Emp"
+]
+
+model_df = model_df[
+    [c for c in model_columns if c in model_df.columns]
+].copy()
+
+
+# ------------------------------------------------------------
+# 7. Sort and inspect
+# ------------------------------------------------------------
+
+model_df = (
+    model_df
+    .sort_values("Month")
+    .reset_index(drop=True)
+)
+
+print("=" * 80)
+print("MONTHLY MODELING DATASET")
+print("=" * 80)
+
+print("Shape:", model_df.shape)
+print("\nColumns:")
+print(model_df.columns.tolist())
+
+display(model_df.tail(15))
+
+print("\nMissing values:")
+display(model_df.isna().sum().to_frame("Missing Count"))
