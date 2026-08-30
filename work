@@ -1,1 +1,19 @@
+# Load complete July overtime data
 
+july_ot_file = input_file_path / "Overtime Upload Report_20260807085324157.csv"
+
+july_ot = pd.read_csv(july_ot_file, low_memory=False)
+
+# Make sure TOTAL is numeric
+july_ot["TOTAL"] = pd.to_numeric(july_ot["TOTAL"], errors="coerce")
+
+print("July OT shape:", july_ot.shape)
+
+print("\nTOTAL OT summary:")
+print(july_ot["TOTAL"].describe())
+
+print("\nMissing TOTAL values:", july_ot["TOTAL"].isna().sum())
+
+display(
+    july_ot[["EMP CODE", "EMP NAME", "TOTAL"]].head(10)
+)
