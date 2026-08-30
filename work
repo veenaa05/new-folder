@@ -1,18 +1,18 @@
-# Find all attendance files
-attendance_files = [
-    f for f in input_file_path.iterdir()
-    if "Attendance" in f.name and f.suffix.lower() in [".csv", ".xlsx", ".xls"]
-]
 
-for file in attendance_files:
-    print("\n" + "=" * 80)
-    print("FILE:", file.name)
-    
-    if file.suffix.lower() == ".csv":
-        temp = pd.read_csv(file, low_memory=False)
-    else:
-        temp = pd.read_excel(file)
-    
-    print("Shape:", temp.shape)
-    print("Columns:")
-    print(temp.columns.tolist())
+================================================================================
+FILE: Employee Attendance Report - PSIPL_20260826140835572.csv
+Shape: (7820, 67)
+Columns:
+['Employee Code', 'Employee Name', 'Band', 'Grade', 'Division', 'Department', 'Designation', 'Date of joining', 'Date of Leaving', 'Employee Status', 'State', 'City', 'Branch', 'Employee Pay cycle', 'Residence', 'Cost Center', '26 JUL 26', '27 JUL 26', '28 JUL 26', '29 JUL 26', '30 JUL 26', '31 JUL 26', '01 AUG 26', '02 AUG 26', '03 AUG 26', '04 AUG 26', '05 AUG 26', '06 AUG 26', '07 AUG 26', '08 AUG 26', '09 AUG 26', '10 AUG 26', '11 AUG 26', '12 AUG 26', '13 AUG 26', '14 AUG 26', '15 AUG 26', '16 AUG 26', '17 AUG 26', '18 AUG 26', '19 AUG 26', '20 AUG 26', '21 AUG 26', '22 AUG 26', '23 AUG 26', '24 AUG 26', '25 AUG 26', 'Loss of Pay', 'Abscond', 'Site Holiday', 'Absent Count', 'Half Day Count', 'Present Count', 'Outdoor Duty', 'Worked On Off Count', 'Week Off Count', 'Public Holiday Count', 'Approved Leaves', 'BL Approved', 'BL Submit', 'EL Approved', 'EL Submit', 'PL Approved', 'PL Submit', 'Payable', 'Non Payable', 'Total Days']
+
+================================================================================
+FILE: Employee Attendance Report_20260826125133276.csv
+Shape: (20069, 72)
+Columns:
+['Group', 'Company Name', 'Employee Code', 'Employee Name', 'Band', 'Grade', 'Division', 'Department', 'Sub Department', 'Designation', 'Date of joining', 'Date of Leaving', 'Employee Category', 'Employee Status', 'Reporting Manager', 'Region', 'Country', 'State', 'City', 'Branch', '01 JUL 26', '02 JUL 26', '03 JUL 26', '04 JUL 26', '05 JUL 26', '06 JUL 26', '07 JUL 26', '08 JUL 26', '09 JUL 26', '10 JUL 26', '11 JUL 26', '12 JUL 26', '13 JUL 26', '14 JUL 26', '15 JUL 26', '16 JUL 26', '17 JUL 26', '18 JUL 26', '19 JUL 26', '20 JUL 26', '21 JUL 26', '22 JUL 26', '23 JUL 26', '24 JUL 26', '25 JUL 26', '26 JUL 26', '27 JUL 26', '28 JUL 26', '29 JUL 26', '30 JUL 26', '31 JUL 26', 'Present Count', 'Week Off Count', 'Worked On Off Count', 'Public Holiday Count', 'Half Day Count', 'Absent Count', 'Approved Leaves', 'Submited Leaves', 'BL Approved', 'BL Submit', 'ML Approved', 'ML Submit', 'OL Approved', 'OL Submit', 'PL Approved', 'PL Submit', 'WL Approved', 'WL Submit', 'Payable', 'Non Payable', 'Total Days']
+
+================================================================================
+FILE: Employee Attendance Report_20260826132240943.csv
+Shape: (19569, 69)
+Columns:
+['Group', 'Company Name', 'Employee Code', 'Employee Name', 'Band', 'Grade', 'Division', 'Department', 'Sub Department', 'Designation', 'Date of joining', 'Date of Leaving', 'Employee Category', 'Employee Status', 'Reporting Manager', 'Region', 'Country', 'State', 'City', 'Branch', '01 JUN 26', '02 JUN 26', '03 JUN 26', '04 JUN 26', '05 JUN 26', '06 JUN 26', '07 JUN 26', '08 JUN 26', '09 JUN 26', '10 JUN 26', '11 JUN 26', '12 JUN 26', '13 JUN 26', '14 JUN 26', '15 JUN 26', '16 JUN 26', '17 JUN 26', '18 JUN 26', '19 JUN 26', '20 JUN 26', '21 JUN 26', '22 JUN 26', '23 JUN 26', '24 JUN 26', '25 JUN 26', '26 JUN 26', '27 JUN 26', '28 JUN 26', '29 JUN 26', '30 JUN 26', 'Present Count', 'Week Off Count', 'Worked On Off Count', 'Public Holiday Count', 'Half Day Count', 'Absent Count', 'Approved Leaves', 'Submited Leaves', 'BL Approved', 'BL Submit', 'ML Approved', 'ML Submit', 'PL Approved', 'PL Submit', 'WL Approved', 'WL Submit', 'Payable', 'Non Payable', 'Total Days']
