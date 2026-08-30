@@ -1,6 +1,1 @@
-Final feature shape: (20069, 24)
-July employees without June attendance: 1631
-July employees without OT record: 18014
 
-Final feature columns:
-['Employee Code', 'Present Count', 'Absent Count', 'Half Day Count', 'Approved Leaves', 'Payable', 'Non Payable', 'Total Days', 'Absence Rate July', 'Present Count June', 'Absent Count June', 'Half Day Count June', 'Approved Leaves June', 'Payable June', 'Non Payable June', 'Total Days June', 'Absence Rate June', 'Chargeable OT June', 'Non Chargeable OT June', 'Total OT June', 'Chargeable OT', 'Non Chargeable OT', 'Total OT', 'OT Change']
