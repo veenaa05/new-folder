@@ -1,1 +1,17 @@
+required_cols = [
+    "Employee Code",
+    "Employee Status",
+    "Actual Join Date",
+    "Resignation Date",
+    "Year Of Service (Current DOJ)",
+    "Department",
+    "Designation",
+    "Company Name"
+]
 
+employee_master[required_cols].info()
+
+print("\nMissing values:")
+print(employee_master[required_cols].isnull().sum())
+
+display(employee_master[required_cols].head(10))
