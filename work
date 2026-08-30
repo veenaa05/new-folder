@@ -1,1 +1,14 @@
+# Combine monthly hiring and headcount data
+workforce_data = pd.merge(
+    monthly_hiring,
+    monthly_headcount,
+    on="Month",
+    how="left"
+)
 
+# Sort by month
+workforce_data = workforce_data.sort_values("Month").reset_index(drop=True)
+
+print("Workforce dataset shape:", workforce_data.shape)
+
+display(workforce_data.tail(12))
