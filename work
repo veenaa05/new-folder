@@ -1,1 +1,44 @@
+# ============================================================
+# FIND THE MONTHLY FACTOR DATAFRAME AUTOMATICALLY
+# ============================================================
 
+import pandas as pd
+
+required_factors = {
+    "absenteeism_rate",
+    "average_tenure_years",
+    "avg_ot_hours_per_emp",
+    "budget",
+    "headcount",
+    "resigned_employees",
+    "unplanned_leave_days"
+}
+
+candidates = []
+
+for name, obj in globals().items():
+    if isinstance(obj, pd.DataFrame):
+        cols = set(obj.columns)
+        matched = required_factors.intersection(cols)
+
+        if len(matched) >= 3:
+            candidates.append(
+                (name, obj.shape, sorted(matched), list(obj.columns))
+            )
+
+print("=" * 70)
+print("POSSIBLE MONTHLY FACTOR DATAFRAMES")
+print("=" * 70)
+
+if candidates:
+    for name, shape, matched, cols in candidates:
+        print(f"\nDataFrame name : {name}")
+        print(f"Shape          : {shape}")
+        print(f"Matching factors ({len(matched)}):")
+        print(matched)
+else:
+    print("No suitable dataframe found.")
+    print("\nAvailable DataFrames:")
+    for name, obj in globals().items():
+        if isinstance(obj, pd.DataFrame):
+            print(f"  {name}: {obj.shape}")
