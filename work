@@ -1,13 +1,1 @@
 
-# Keep only complete months for model training
-monthly_hiring = monthly_hiring[
-    monthly_hiring["Month"] < pd.Timestamp("2026-08-01")
-].copy()
-
-print("Training data period:")
-print("From:", monthly_hiring["Month"].min())
-print("To  :", monthly_hiring["Month"].max())
-
-print("\nNumber of complete months:", len(monthly_hiring))
-
-display(monthly_hiring.tail(12))
