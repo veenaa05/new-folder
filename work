@@ -1,1 +1,78 @@
+# ============================================================
+# FINAL MULTI-FACTOR MODELING DATASET
+# ============================================================
 
+import pandas as pd
+import numpy as np
+
+# Work on a copy
+model_data = model_df.copy()
+
+# Make sure Month is datetime
+model_data["Month"] = pd.to_datetime(model_data["Month"])
+
+# Sort chronologically
+model_data = model_data.sort_values("Month").reset_index(drop=True)
+
+# ------------------------------------------------------------
+# Core factors with sufficient historical coverage
+# ------------------------------------------------------------
+
+core_factors = [
+    "Headcount",
+    "Average_Tenure_Years"
+]
+
+# ------------------------------------------------------------
+# Additional predictive factors
+# These are retained for the final output.
+# They have limited historical observations in the current data.
+# ------------------------------------------------------------
+
+additional_factors = [
+    "Resigned_Employees",
+    "Turnover_Rate",
+    "Absenteeism_Rate",
+    "Unplanned_Leave_Days",
+    "Avg_OT_Hours_Per_Emp"
+]
+
+all_factors = core_factors + additional_factors
+
+# Check which columns actually exist
+available_factors = [
+    col for col in all_factors
+    if col in model_data.columns
+]
+
+print("=" * 70)
+print("FINAL PREDICTIVE FACTORS")
+print("=" * 70)
+
+for col in available_factors:
+    print(
+        f"{col:30} "
+        f"Available: {model_data[col].notna().sum():3d} / "
+        f"{len(model_data)} months"
+    )
+
+# ------------------------------------------------------------
+# Historical modelling dataset
+# Target = New_Hires
+# ------------------------------------------------------------
+
+historical_model = model_data[
+    ["Month", "New_Hires"] + core_factors
+].copy()
+
+historical_model = historical_model.dropna()
+
+print("\n" + "=" * 70)
+print("HISTORICAL MODEL DATA")
+print("=" * 70)
+
+print("Shape:", historical_model.shape)
+print("\nColumns:")
+print(historical_model.columns.tolist())
+
+display(historical_model.tail(10))
