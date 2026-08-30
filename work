@@ -1,1 +1,17 @@
+# Create monthly hiring history
+monthly_hiring = (
+    employee_master
+    .set_index("Actual Join Date")
+    .resample("MS")
+    .size()
+    .reset_index(name="New Joiners")
+)
 
+monthly_hiring.rename(columns={"Actual Join Date": "Month"}, inplace=True)
+
+print("Monthly hiring history:")
+print("From:", monthly_hiring["Month"].min())
+print("To  :", monthly_hiring["Month"].max())
+print("Number of months:", len(monthly_hiring))
+
+display(monthly_hiring.tail(15))
