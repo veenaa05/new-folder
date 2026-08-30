@@ -1,16 +1,17 @@
-# Load June overtime data
+June OT shape: (3228, 109)
 
-june_ot_path = next(
-    input_file_path.glob("*Overtime Upload Report_20260807084943902.csv")
-)
+June OT columns:
+['EMP CODE', 'EMP NAME', 'BRANCH NAME', 'CITY NAME', 'JOIN DATE', 'LAST WORKING DATE', 'DESIGNATION', 'EMPLOYEE CATEGORY', 'COST CENTRE CODE', 'COST CENTRE NAME', 'SITE CODE', 'SITE NAME', 'PAY CYCLE', '26-JUN-26_CH', '26-JUN-26_NCH', '26-JUN-26_TOT', '27-JUN-26_CH', '27-JUN-26_NCH', '27-JUN-26_TOT', '28-JUN-26_CH', '28-JUN-26_NCH', '28-JUN-26_TOT', '29-JUN-26_CH', '29-JUN-26_NCH', '29-JUN-26_TOT', '30-JUN-26_CH', '30-JUN-26_NCH', '30-JUN-26_TOT', '01-JUL-26_CH', '01-JUL-26_NCH', '01-JUL-26_TOT', '02-JUL-26_CH', '02-JUL-26_NCH', '02-JUL-26_TOT', '03-JUL-26_CH', '03-JUL-26_NCH', '03-JUL-26_TOT', '04-JUL-26_CH', '04-JUL-26_NCH', '04-JUL-26_TOT', '05-JUL-26_CH', '05-JUL-26_NCH', '05-JUL-26_TOT', '06-JUL-26_CH', '06-JUL-26_NCH', '06-JUL-26_TOT', '07-JUL-26_CH', '07-JUL-26_NCH', '07-JUL-26_TOT', '08-JUL-26_CH', '08-JUL-26_NCH', '08-JUL-26_TOT', '09-JUL-26_CH', '09-JUL-26_NCH', '09-JUL-26_TOT', '10-JUL-26_CH', '10-JUL-26_NCH', '10-JUL-26_TOT', '11-JUL-26_CH', '11-JUL-26_NCH', '11-JUL-26_TOT', '12-JUL-26_CH', '12-JUL-26_NCH', '12-JUL-26_TOT', '13-JUL-26_CH', '13-JUL-26_NCH', '13-JUL-26_TOT', '14-JUL-26_CH', '14-JUL-26_NCH', '14-JUL-26_TOT', '15-JUL-26_CH', '15-JUL-26_NCH', '15-JUL-26_TOT', '16-JUL-26_CH', '16-JUL-26_NCH', '16-JUL-26_TOT', '17-JUL-26_CH', '17-JUL-26_NCH', '17-JUL-26_TOT', '18-JUL-26_CH', '18-JUL-26_NCH', '18-JUL-26_TOT', '19-JUL-26_CH', '19-JUL-26_NCH', '19-JUL-26_TOT', '20-JUL-26_CH', '20-JUL-26_NCH', '20-JUL-26_TOT', '21-JUL-26_CH', '21-JUL-26_NCH', '21-JUL-26_TOT', '22-JUL-26_CH', '22-JUL-26_NCH', '22-JUL-26_TOT', '23-JUL-26_CH', '23-JUL-26_NCH', '23-JUL-26_TOT', '24-JUL-26_CH', '24-JUL-26_NCH', '24-JUL-26_TOT', '25-JUL-26_CH', '25-JUL-26_NCH', '25-JUL-26_TOT', 'CHARGEABLE TOTAL', 'NON CHARGEABLE TOTAL', 'TOTAL', ' PF CALCULATION TYPE', ' CHARGEBLEOT FORMULA ', ' NONCHARGEBLE OT FORMULA']
 
-june_ot = pd.read_csv(june_ot_path)
+June TOTAL OT summary:
+count    3228.000000
+mean       16.881877
+std        29.026442
+min         0.000000
+25%         0.000000
+50%         1.000000
+75%        24.000000
+max       221.000000
+Name: TOTAL, dtype: float64
 
-print("June OT shape:", june_ot.shape)
-print("\nJune OT columns:")
-print(june_ot.columns.tolist())
-
-print("\nJune TOTAL OT summary:")
-print(june_ot["TOTAL"].describe())
-
-print("\nMissing TOTAL values:", june_ot["TOTAL"].isna().sum())
+Missing TOTAL values: 0
