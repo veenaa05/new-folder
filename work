@@ -1,1 +1,25 @@
+# Create employee-level July overtime feature
 
+july_ot_feature = july_ot[
+    ["EMP CODE", "CHARGEABLE TOTAL", "NON CHARGEABLE TOTAL", "TOTAL"]
+].copy()
+
+july_ot_feature = july_ot_feature.rename(columns={
+    "EMP CODE": "Employee Code",
+    "CHARGEABLE TOTAL": "Chargeable OT",
+    "NON CHARGEABLE TOTAL": "Non Chargeable OT",
+    "TOTAL": "Total OT"
+})
+
+# Remove duplicate employee codes, if any
+july_ot_feature = (
+    july_ot_feature
+    .groupby("Employee Code", as_index=False)[
+        ["Chargeable OT", "Non Chargeable OT", "Total OT"]
+    ]
+    .sum()
+)
+
+print("July OT feature shape:", july_ot_feature.shape)
+
+display(july_ot_feature.head(10))
