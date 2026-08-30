@@ -1,1 +1,16 @@
+# Merge resignation data with workforce data
+workforce_data = pd.merge(
+    workforce_data,
+    resignation_data,
+    on="Month",
+    how="left"
+)
 
+# Keep missing resignation history as NaN for now
+# Do NOT replace it with 0 because earlier months have no resignation data.
+workforce_data["Turnover Rate (%)"] = (
+    workforce_data["Resigned Employees"]
+    / workforce_data["Headcount"]
+) * 100
+
+display(workforce_data.tail(15))
