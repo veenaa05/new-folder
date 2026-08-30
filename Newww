@@ -1,0 +1,19 @@
+# ============================================================
+# FIX PROPHET / MATPLOTLIB COMPATIBILITY
+# ============================================================
+
+import sys
+import subprocess
+
+subprocess.check_call([
+    sys.executable,
+    "-m",
+    "pip",
+    "install",
+    "--upgrade",
+    "prophet",
+    "matplotlib==3.9.2"
+])
+
+print("Prophet and Matplotlib installation completed.")
+print("IMPORTANT: Restart the Jupyter kernel now.")
