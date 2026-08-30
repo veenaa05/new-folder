@@ -1,1 +1,42 @@
+# ============================================================
+# FINAL DATASET VALIDATION
+# ============================================================
 
+print("=" * 60)
+print("FINAL FEATURE DATASET VALIDATION")
+print("=" * 60)
+
+print("Rows:", len(final_features))
+print("Columns:", len(final_features.columns))
+
+print("\nUnique employees:",
+      final_features["Employee Code"].nunique())
+
+print("Duplicate employee codes:",
+      final_features["Employee Code"].duplicated().sum())
+
+print("\nJune attendance available:",
+      final_features["June_Attendance_Available"].sum())
+
+print("June attendance unavailable:",
+      (final_features["June_Attendance_Available"] == 0).sum())
+
+print("\nJuly OT available:",
+      final_features["OT_July_Available"].sum())
+
+print("July OT unavailable:",
+      (final_features["OT_July_Available"] == 0).sum())
+
+print("\nOT totals:")
+print("June OT:", final_features["Total OT June"].sum())
+print("July OT:", final_features["Total OT"].sum())
+print("OT Change:", final_features["OT Change"].sum())
+
+print("\nMissing values:")
+missing = final_features.isna().sum()
+print(missing[missing > 0])
+
+print("\nFinal feature columns:")
+print(final_features.columns.tolist())
+
+print("=" * 60)
