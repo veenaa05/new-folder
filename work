@@ -1,1 +1,24 @@
+# Normalize Employee Code consistently across attendance and OT features
 
+def normalize_employee_code(df, col="Employee Code"):
+    df[col] = (
+        df[col]
+        .astype(str)
+        .str.strip()
+        .str.replace(".0", "", regex=False)
+        .str.lstrip("0")
+    )
+    
+    # Avoid empty string for codes that were all zeros
+    df[col] = df[col].replace("", "0")
+    
+    return df
+
+
+june_att_feature = normalize_employee_code(june_att_feature)
+ot_features = normalize_employee_code(ot_features)
+
+print("June attendance codes:", june_att_feature["Employee Code"].nunique())
+print("OT feature codes:", ot_features["Employee Code"].nunique())
+
+display(june_att_feature.head())
