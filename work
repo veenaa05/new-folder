@@ -1,1 +1,34 @@
+# Calculate monthly attendance-based workforce factors
 
+def calculate_attendance_metrics(df, month):
+    total_days = df["Total Days"].sum()
+    absent_days = df["Absent Count"].sum()
+    half_days = df["Half Day Count"].sum()
+
+    # Count a half-day as 0.5 absent day
+    absence_days = absent_days + (0.5 * half_days)
+
+    absenteeism_rate = (absence_days / total_days) * 100
+
+    return {
+        "Month": pd.Timestamp(month),
+        "Absenteeism Rate (%)": absenteeism_rate,
+        "Unplanned Leave Days": absent_days
+    }
+
+
+june_metrics = calculate_attendance_metrics(
+    june_attendance, "2026-06-01"
+)
+
+july_metrics = calculate_attendance_metrics(
+    july_attendance, "2026-07-01"
+)
+
+attendance_metrics = pd.DataFrame([
+    june_metrics,
+    july_metrics
+])
+
+print("Attendance metrics:")
+display(attendance_metrics)
