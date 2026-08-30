@@ -1,1 +1,25 @@
+# ============================================================
+# Fix July Employee Code format
+# ============================================================
 
+july_att_feature["Employee Code"] = (
+    july_att_feature["Employee Code"]
+    .astype(str)
+    .str.strip()
+    .str.replace("'", "", regex=False)   # remove leading apostrophe
+    .str.replace(".0", "", regex=False)
+    .str.lstrip("0")                     # remove leading zeros
+)
+
+# Avoid blank employee codes
+july_att_feature["Employee Code"] = (
+    july_att_feature["Employee Code"].replace("", "0")
+)
+
+print("July attendance feature shape:", july_att_feature.shape)
+print(
+    "July attendance employee codes:",
+    july_att_feature["Employee Code"].nunique()
+)
+
+display(july_att_feature.head(10))
