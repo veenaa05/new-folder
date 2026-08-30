@@ -1,1 +1,59 @@
+# ============================================================
+# FIND MONTHLY FACTOR DATAFRAME
+# ============================================================
 
+import pandas as pd
+
+required_factors = {
+    "absenteeism_rate",
+    "average_tenure_years",
+    "avg_ot_hours_per_emp",
+    "budget",
+    "headcount",
+    "resigned_employees",
+    "unplanned_leave_days"
+}
+
+candidates = []
+
+# Take a snapshot first
+all_variables = list(globals().items())
+
+for name, obj in all_variables:
+
+    if isinstance(obj, pd.DataFrame):
+
+        columns = set(obj.columns)
+        matched = required_factors.intersection(columns)
+
+        if len(matched) >= 3:
+            candidates.append(
+                {
+                    "name": name,
+                    "shape": obj.shape,
+                    "matched": sorted(matched),
+                    "columns": list(obj.columns)
+                }
+            )
+
+print("=" * 70)
+print("POSSIBLE MONTHLY FACTOR DATAFRAMES")
+print("=" * 70)
+
+if candidates:
+
+    for item in candidates:
+        print("\nDataFrame name :", item["name"])
+        print("Shape          :", item["shape"])
+        print("Matching factors:")
+        print(item["matched"])
+
+else:
+
+    print("\nNo suitable monthly dataframe found.")
+
+    print("\nAvailable DataFrames:")
+
+    for name, obj in all_variables:
+        if isinstance(obj, pd.DataFrame):
+            print(f"  {name}: {obj.shape}")
